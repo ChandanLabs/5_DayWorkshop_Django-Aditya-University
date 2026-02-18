@@ -6,7 +6,13 @@ from .models import Info
 # Create your views here.
 
 def home(request):
-    return HttpResponse("Welcome to Myapp")
+    if request.method == 'POST':
+        name = request.POST['name']
+        age = request.POST['age']
+        salary = request.POST['salary']
+        email = request.POST['email']
+        info = Info(name=name, age=age, salary=salary, email=email)
+    return render (request, 'home.html')
 
 def about(request):
     return HttpResponse("This is about page")
@@ -19,14 +25,14 @@ def services(request):
 
 def register(request):
     if request.method == 'POST':
-        name = request.POST.get('name', '').strip()
-        age = request.POST.get('age', '').strip()
-        salary = request.POST.get('salary', '').strip()
-        email = request.POST.get('email', '').strip()
+        name = request.POST.get('name', '')
+        age = request.POST.get('age', '')
+        salary = request.POST.get('salary', '')
+        email = request.POST.get('email', '')
         
 
 
-    
+    info = Info(name=name, age=age, salary=salary, email=email)
     return render(request, 'register.html')
 
 def details(request):
